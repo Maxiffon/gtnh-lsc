@@ -47,5 +47,6 @@ foreach ($m in $mods) {
 [void]$sb.AppendLine($main)
 [void]$sb.AppendLine('')
 
-[IO.File]::WriteAllText($out, $sb.ToString(), (New-Object System.Text.UTF8Encoding($false)))
+$content = $sb.ToString() -replace "`r`n", "`n" # AppendLine uses CRLF, приводим всё к LF
+[IO.File]::WriteAllText($out, $content, (New-Object System.Text.UTF8Encoding($false)))
 Write-Output ("written: {0}  bytes={1}  delimiter level={2}" -f $out, (Get-Item $out).Length, $lvl)
